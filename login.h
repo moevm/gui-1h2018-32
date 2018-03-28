@@ -17,6 +17,7 @@ public:
 
 private:
     Ui::login *ui;
+    void accept();
 };
 
 #endif // LOGIN_H

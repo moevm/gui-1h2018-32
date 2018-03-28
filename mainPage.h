@@ -3,9 +3,7 @@
 
 #include <QtWidgets/QWidget>
 #include <QtCharts/QChartGlobal>
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QSqlTableModel>
+#include <QtSql>
 #include <QPushButton>
 
 
@@ -55,6 +53,7 @@ private:
 private slots:
     void handleButton();
     void handleButtonLogin();
+    void check();
 
 private:
     QPushButton *m_button1;
