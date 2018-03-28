@@ -1,5 +1,10 @@
 #include "mainPage.h"
 #include "ui_telegramNews.h"
+#include <QDebug>
+#include <QSqlError>
+#include <QSqlRecord>
+#include "newsone.h"
+#include "login.h"
 
 #include <QtCharts/QChartView>
 
@@ -14,31 +19,65 @@ ThemeWidget::ThemeWidget(QWidget *parent) :
     populateThemeBox();
     populateAnimationBox();
 
+    db = QSqlDatabase::addDatabase("QMYSQL");
+    db.setHostName("127.0.0.1");
+    db.setDatabaseName("telegramnews");
+    db.setUserName("root");
+    db.setPassword("root");
+
+    if (!db.open()){
+        qDebug() << db.lastError().text();
+    } else {
+        qDebug() << "Success!";
+    }
+
+    connect(m_ui->pushButton, SIGNAL (released()), this, SLOT (handleButtonLogin()));
+
     QChartView *chartView;
 
     chartView = new QChartView(createAreaChart());
     m_ui->gridLayout->addWidget(chartView, 1, 0);
+    m_button1 = new QPushButton("Read more", this);
+    m_ui->gridLayout->addWidget(m_button1, 2, 0);
+//    m_button1->setGeometry(QSize(200, 50));
+    connect(m_button1, SIGNAL (released()), this, SLOT (handleButton()));
     m_charts << chartView;
 
     chartView = new QChartView(createAreaChart());
     m_ui->gridLayout->addWidget(chartView, 1, 1);
+    m_button1 = new QPushButton("Read more", this);
+    m_ui->gridLayout->addWidget(m_button1, 2, 1);
+//    m_button1->setGeometry(QSize(200, 50));
+    connect(m_button1, SIGNAL (released()), this, SLOT (handleButton()));
     m_charts << chartView;
 
     chartView = new QChartView(createAreaChart());
     m_ui->gridLayout->addWidget(chartView, 1, 2);
+    m_button1 = new QPushButton("Read more", this);
+    m_ui->gridLayout->addWidget(m_button1, 2, 2);
+    connect(m_button1, SIGNAL (released()), this, SLOT (handleButton()));
     m_charts << chartView;
 
     chartView = new QChartView(createAreaChart());
-    m_ui->gridLayout->addWidget(chartView, 2, 0);
+    m_ui->gridLayout->addWidget(chartView, 3, 0);
+    m_charts << chartView;
+    m_button1 = new QPushButton("Read more", this);
+    connect(m_button1, SIGNAL (released()), this, SLOT (handleButton()));
+    m_ui->gridLayout->addWidget(m_button1, 4, 0);
+
+    chartView = new QChartView(createAreaChart());
+    m_ui->gridLayout->addWidget(chartView, 3, 1);
+    m_button1 = new QPushButton("Read more", this);
+    m_ui->gridLayout->addWidget(m_button1, 4, 1);
+    connect(m_button1, SIGNAL (released()), this, SLOT (handleButton()));
     m_charts << chartView;
 
     chartView = new QChartView(createAreaChart());
-    m_ui->gridLayout->addWidget(chartView, 2, 1);
+    m_ui->gridLayout->addWidget(chartView, 3, 2);
     m_charts << chartView;
-
-    chartView = new QChartView(createAreaChart());
-    m_ui->gridLayout->addWidget(chartView, 2, 2);
-    m_charts << chartView;
+    m_button1 = new QPushButton("Read more", this);
+    m_ui->gridLayout->addWidget(m_button1, 4, 2);
+    connect(m_button1, SIGNAL (released()), this, SLOT (handleButton()));
 
     QPalette pal = qApp->palette();
     pal.setColor(QPalette::Window, QRgb(0xf0f0f0));
@@ -46,6 +85,18 @@ ThemeWidget::ThemeWidget(QWidget *parent) :
     qApp->setPalette(pal);
 
     updateUI();
+}
+
+void ThemeWidget::handleButton()
+{
+    newsOne *newsone = new newsOne;
+    newsone->show();
+}
+
+void ThemeWidget::handleButtonLogin()
+{
+    login *log = new login;
+    log->show();
 }
 
 ThemeWidget::~ThemeWidget()
@@ -76,7 +127,9 @@ void ThemeWidget::populateAnimationBox()
 QChart *ThemeWidget::createAreaChart() const
 {
     QChart *chart = new QChart();
-    chart->setTitle("Area chart");
+    chart->setTitle("BREAKING NEWS");
+
+    return chart;
 }
 
 void ThemeWidget::updateUI()
@@ -93,7 +146,7 @@ void ThemeWidget::updateUI()
         if (theme == QChart::ChartThemeLight) {
             pal.setColor(QPalette::Window, QRgb(0xf0f0f0));
             pal.setColor(QPalette::WindowText, QRgb(0x404044));
-        //![8]
+
         } else if (theme == QChart::ChartThemeDark) {
             pal.setColor(QPalette::Window, QRgb(0x121218));
             pal.setColor(QPalette::WindowText, QRgb(0xd6d6d6));

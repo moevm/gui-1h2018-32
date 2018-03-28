@@ -3,6 +3,11 @@
 
 #include <QtWidgets/QWidget>
 #include <QtCharts/QChartGlobal>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QSqlTableModel>
+#include <QPushButton>
+
 
 QT_BEGIN_NAMESPACE
 class QComboBox;
@@ -35,6 +40,7 @@ private:
     void populateThemeBox();
     void populateAnimationBox();
     void connectSignals();
+
     QChart *createAreaChart() const;
 
 private:
@@ -44,6 +50,15 @@ private:
     QList<QChartView *> m_charts;
 
     Ui_ThemeWidgetForm *m_ui;
+    QSqlDatabase db;
+
+private slots:
+    void handleButton();
+    void handleButtonLogin();
+
+private:
+    QPushButton *m_button1;
+//    QPushButton *pushButton;
 };
 
 #endif

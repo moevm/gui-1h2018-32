@@ -1,13 +1,13 @@
 /********************************************************************************
-** Form generated from reading UI file 'themewidget.ui'
+** Form generated from reading UI file 'telegramNews.ui'
 **
 ** Created by: Qt User Interface Compiler version 5.10.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef UI_THEMEWIDGET_H
-#define UI_THEMEWIDGET_H
+#ifndef UI_TELEGRAMNEWS_H
+#define UI_TELEGRAMNEWS_H
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
@@ -87,10 +87,10 @@ public:
 
     void retranslateUi(QWidget *ThemeWidgetForm)
     {
+        ThemeWidgetForm->setWindowTitle(QApplication::translate("ThemeWidgetForm", "TelegramNews", nullptr));
         themeLabel->setText(QApplication::translate("ThemeWidgetForm", "\320\241\321\202\320\270\320\273\321\214:", nullptr));
         animatedLabel->setText(QApplication::translate("ThemeWidgetForm", "\320\242\320\265\320\274\320\260 \321\201\321\202\320\260\321\202\320\265\320\271:", nullptr));
         pushButton->setText(QApplication::translate("ThemeWidgetForm", "\320\222\320\276\320\271\321\202\320\270", nullptr));
-        Q_UNUSED(ThemeWidgetForm);
     } // retranslateUi
 
 };
@@ -101,4 +101,4 @@ namespace Ui {
 
 QT_END_NAMESPACE
 
-#endif // UI_THEMEWIDGET_H
+#endif // UI_TELEGRAMNEWS_H
