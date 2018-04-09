@@ -190,7 +190,4 @@ void ThemeWidget::updateUI()
     }
 }
 
-void ThemeWidget::check() {
-
-}
 

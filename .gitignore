@@ -1,0 +1,6 @@
+*.pro.user.*
+.stash
+.sqlite
+debug
+release
+Makefile.*

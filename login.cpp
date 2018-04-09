@@ -14,7 +14,7 @@ login::login(QWidget *parent) :
     QString str_insert = "INSERT INTO users(login, password) "
                 "VALUES ('%1', '%2');";
     QString str = str_insert.arg("admin")
-                    .arg("12345");
+                            .arg("12345");
     bool b = a_query.exec(str);
     if (!b) {
         qDebug() << "Cannot insert data!";

@@ -53,7 +53,6 @@ private:
 private slots:
     void handleButton();
     void handleButtonLogin();
-    void check();
 
 private:
     QPushButton *m_button1;
