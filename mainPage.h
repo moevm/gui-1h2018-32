@@ -6,7 +6,6 @@
 #include <QtSql>
 #include <QPushButton>
 
-
 QT_BEGIN_NAMESPACE
 class QComboBox;
 class QCheckBox;
@@ -30,6 +29,8 @@ class ThemeWidget: public QWidget
 public:
     explicit ThemeWidget(QWidget *parent = 0);
     ~ThemeWidget();
+    static QString userIn;
+    void change();
 
 private Q_SLOTS:
     void updateUI();
@@ -53,10 +54,11 @@ private:
 private slots:
     void handleButton();
     void handleButtonLogin();
+    void handleButtonSignUp();
+    void handleButtonExit();
 
 private:
     QPushButton *m_button1;
-//    QPushButton *pushButton;
 };
 
 #endif

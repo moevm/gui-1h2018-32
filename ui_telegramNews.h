@@ -34,6 +34,8 @@ public:
     QLabel *animatedLabel;
     QComboBox *animatedComboBox;
     QSpacerItem *horizontalSpacer;
+    QLabel *label;
+    QPushButton *pushButton_3;
     QPushButton *pushButton_2;
     QPushButton *pushButton;
 
@@ -70,6 +72,17 @@ public:
 
         horizontalLayout->addItem(horizontalSpacer);
 
+        label = new QLabel(ThemeWidgetForm);
+        label->setObjectName(QStringLiteral("label"));
+
+        horizontalLayout->addWidget(label);
+
+        pushButton_3 = new QPushButton(ThemeWidgetForm);
+        pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
+        pushButton_3->setEnabled(true);
+
+        horizontalLayout->addWidget(pushButton_3);
+
         pushButton_2 = new QPushButton(ThemeWidgetForm);
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
         pushButton_2->setEnabled(true);
@@ -97,6 +110,8 @@ public:
         ThemeWidgetForm->setWindowTitle(QApplication::translate("ThemeWidgetForm", "TelegramNews", nullptr));
         themeLabel->setText(QApplication::translate("ThemeWidgetForm", "\320\241\321\202\320\270\320\273\321\214:", nullptr));
         animatedLabel->setText(QApplication::translate("ThemeWidgetForm", "\320\242\320\265\320\274\320\260 \321\201\321\202\320\260\321\202\320\265\320\271:", nullptr));
+        label->setText(QString());
+        pushButton_3->setText(QApplication::translate("ThemeWidgetForm", "\320\222\321\213\321\205\320\276\320\264", nullptr));
         pushButton_2->setText(QApplication::translate("ThemeWidgetForm", "\320\240\320\265\320\263\320\270\321\201\321\202\321\200\320\260\321\206\320\270\321\217", nullptr));
         pushButton->setText(QApplication::translate("ThemeWidgetForm", "\320\222\320\276\320\271\321\202\320\270", nullptr));
     } // retranslateUi

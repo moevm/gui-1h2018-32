@@ -2,9 +2,10 @@
 #define LOGIN_H
 
 #include <QDialog>
+#include "mainPage.h"
 
 namespace Ui {
-class login;
+    class login;
 }
 
 class login : public QDialog
@@ -13,9 +14,11 @@ class login : public QDialog
 
 public:
     explicit login(QWidget *parent = 0);
+    void setTheme(ThemeWidget *wid);
     ~login();
 
 private:
+    ThemeWidget *temp;
     Ui::login *ui;
     void accept();
 };

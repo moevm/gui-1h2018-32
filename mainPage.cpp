@@ -2,7 +2,10 @@
 #include "ui_telegramNews.h"
 #include "newsone.h"
 #include "login.h"
+#include "signUp.h"
 #include <QtCharts/QChartView>
+
+QString ThemeWidget::userIn = "";
 
 ThemeWidget::ThemeWidget(QWidget *parent) :
     QWidget(parent),
@@ -32,16 +35,13 @@ ThemeWidget::ThemeWidget(QWidget *parent) :
     if (!b) {
         qDebug() << "Cannot create table!";
     }
-//    QString str_insert = "INSERT INTO users(login, password) "
-//                "VALUES ('%1', '%2');";
-//    str = str_insert.arg("admin")
-//                    .arg("12345");
-//    b = a_query.exec(str);
-//    if (!b) {
-//        qDebug() << "Cannot insert data!";
-//    }
+
+    m_ui->pushButton_3->setVisible(false);
+    m_ui->label->setVisible(false);
 
     connect(m_ui->pushButton, SIGNAL (released()), this, SLOT (handleButtonLogin()));
+    connect(m_ui->pushButton_2, SIGNAL (released()), this, SLOT (handleButtonSignUp()));
+    connect(m_ui->pushButton_3, SIGNAL (released()), this, SLOT (handleButtonExit()));
 
     QChartView *chartView;
 
@@ -105,8 +105,33 @@ void ThemeWidget::handleButton()
 
 void ThemeWidget::handleButtonLogin()
 {
-    login *log = new login;
+    login *log = new login();
+    log->setTheme(this);
     log->show();
+}
+
+void ThemeWidget::change() {
+    m_ui->pushButton->setVisible(false);
+    m_ui->pushButton_2->setVisible(false);
+    m_ui->label->setText(userIn);
+    m_ui->label->setVisible(true);
+    m_ui->pushButton_3->setVisible(true);
+}
+
+void ThemeWidget::handleButtonExit()
+{
+    userIn = "";
+    m_ui->label->setVisible(false);
+    m_ui->label->setText(userIn);
+    m_ui->pushButton_3->setVisible(false);
+    m_ui->pushButton->setVisible(true);
+    m_ui->pushButton_2->setVisible(true);
+}
+
+void ThemeWidget::handleButtonSignUp()
+{
+    signUp *sign = new signUp;
+    sign->show();
 }
 
 ThemeWidget::~ThemeWidget()
@@ -189,5 +214,7 @@ void ThemeWidget::updateUI()
             chartView->chart()->setAnimationOptions(options);
     }
 }
+
+
 
 

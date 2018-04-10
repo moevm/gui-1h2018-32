@@ -3,27 +3,22 @@
 #include "QDebug"
 #include "QtSql"
 #include <QMessageBox>
+#include "mainPage.h"
 
 login::login(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::login)
 {
     ui->setupUi(this);
-
-    QSqlQuery a_query;
-    QString str_insert = "INSERT INTO users(login, password) "
-                "VALUES ('%1', '%2');";
-    QString str = str_insert.arg("admin")
-                            .arg("12345");
-    bool b = a_query.exec(str);
-    if (!b) {
-        qDebug() << "Cannot insert data!";
-    }
 }
 
 login::~login()
 {
     delete ui;
+}
+
+void login::setTheme(ThemeWidget *wid) {
+    temp = wid;
 }
 
 void login::accept() {
@@ -47,7 +42,9 @@ void login::accept() {
             QMessageBox success;
             success.setText("You have logged in!");
             success.exec();
+            ThemeWidget::userIn = str1;
             this->~login();
+            temp->change();
         }
         else {
             QMessageBox passwordError;
@@ -61,5 +58,6 @@ void login::accept() {
         loginError.exec();
     }
 }
+
 
 
