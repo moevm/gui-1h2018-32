@@ -30,6 +30,7 @@ public:
     explicit ThemeWidget(QWidget *parent = 0);
     ~ThemeWidget();
     static QString userIn;
+    static int newsId;
     void change();
 
 private Q_SLOTS:
@@ -55,10 +56,15 @@ private slots:
     void handleButton();
     void handleButtonLogin();
     void handleButtonSignUp();
-    void handleButtonExit();
+    void handleButtonExit(); 
 
 private:
     QPushButton *m_button1;
+    QPushButton *m_button2;
+    QPushButton *m_button3;
+    QPushButton *m_button4;
+    QPushButton *m_button5;
+    QPushButton *m_button6;
 };
 
 #endif

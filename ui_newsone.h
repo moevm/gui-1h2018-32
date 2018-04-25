@@ -18,6 +18,8 @@
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QTextBrowser>
 
 QT_BEGIN_NAMESPACE
 
@@ -30,15 +32,17 @@ public:
     QLineEdit *lineEdit;
     QLabel *label_2;
     QLabel *label_3;
+    QTextBrowser *textBrowser;
+    QPushButton *pushButton;
 
     void setupUi(QDialog *newsOne)
     {
         if (newsOne->objectName().isEmpty())
             newsOne->setObjectName(QStringLiteral("newsOne"));
-        newsOne->resize(400, 300);
+        newsOne->resize(413, 446);
         buttonBox = new QDialogButtonBox(newsOne);
         buttonBox->setObjectName(QStringLiteral("buttonBox"));
-        buttonBox->setGeometry(QRect(30, 260, 341, 32));
+        buttonBox->setGeometry(QRect(30, 410, 341, 32));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
         buttonBox_2 = new QDialogButtonBox(newsOne);
@@ -48,16 +52,22 @@ public:
         buttonBox_2->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
         label = new QLabel(newsOne);
         label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(40, 210, 71, 16));
+        label->setGeometry(QRect(40, 350, 71, 16));
         lineEdit = new QLineEdit(newsOne);
         lineEdit->setObjectName(QStringLiteral("lineEdit"));
-        lineEdit->setGeometry(QRect(40, 230, 331, 31));
+        lineEdit->setGeometry(QRect(40, 370, 331, 31));
         label_2 = new QLabel(newsOne);
         label_2->setObjectName(QStringLiteral("label_2"));
         label_2->setGeometry(QRect(40, 10, 201, 31));
         label_3 = new QLabel(newsOne);
         label_3->setObjectName(QStringLiteral("label_3"));
-        label_3->setGeometry(QRect(40, 40, 331, 161));
+        label_3->setGeometry(QRect(20, 40, 381, 161));
+        textBrowser = new QTextBrowser(newsOne);
+        textBrowser->setObjectName(QStringLiteral("textBrowser"));
+        textBrowser->setGeometry(QRect(40, 200, 351, 141));
+        pushButton = new QPushButton(newsOne);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+        pushButton->setGeometry(QRect(44, 410, 131, 23));
 
         retranslateUi(newsOne);
         QObject::connect(buttonBox, SIGNAL(accepted()), newsOne, SLOT(accept()));
@@ -77,6 +87,7 @@ public:
                         "\260\320\277\321\200\320\260\320\262\320\273\320\265\320\275\320\270\320\271 \321\200\320\260\320\267\320\262\320\270\321\202\320\270\321\217. \320\235\320\265 \321\201\320\273\320\265\320\264\321\203\320\265\321\202, \320\276\320\264\320\275\320\260\320\272\320\276 \320\267\320\260\320\261\321\213\320\262\320\260\321\202\321\214, \321\207\321\202\320\276 \320\277\320\276\321\201\321\202\320\276\321\217\320\275\320\275\320\276\320\265 \320\270\320\275\321\204\320\276\321\200\320\274\320\260\321\206\320\270\320\276\320\275\320\275\320\276-\320\277\321\200\320\276\320\277\320\260\320\263\320\260\320\275\320\264\320\270\321\201\321\202\321\201\320\272\320\276\320\265 <p>\320\276\320\261\320\265\321\201\320\277\320\265\321\207\320\265\320\275\320\270\320\265 \320\275\320\260\321\210\320\265\320\271 \320\264\320\265\321\217\321\202\320\265\320\273\321\214\320\275\320\276\321\201\321\202\320\270 \320\270\320\263\321\200\320\260\320\265\321\202 \320\262\320\260\320\266\320\275\321\203\321\216 \321\200\320\276\320\273"
                         "\321\214 \320\262 \321\204\320\276\321\200\320\274\320\270\321\200\320\276\320\262\320\260\320\275\320\270\320\270 \321\201\320\276\320\276\321\202\320\262\320\265\321\202\321\201\321\202\320\262\321\203\321\216\321\211\320\270\320\271 \321\203\321\201\320\273\320\276\320\262\320\270\320\271 \320\260\320\272\321\202\320\270\320\262\320\270\320\267\320\260\321\206\320\270\320\270. <p>\320\227\320\260\320\264\320\260\321\207\320\260 \320\276\321\200\320\263\320\260\320\275\320\270\320\267\320\260\321\206\320\270\320\270, \320\262 \320\276\321\201\320\276\320\261\320\265\320\275\320\275\320\276\321\201\321\202\320\270 \320\266\320\265 \320\272\320\276\320\275\321\201\321\203\320\273\321\214\321\202\320\260\321\206\320\270\321\217 \321\201 \321\210\320\270\321\200\320\276\320\272\320\270\320\274 \320\260\320\272\321\202\320\270\320\262\320\276\320\274 \321\201\320\277\320\276\321\201\320\276\320\261\321\201\321\202\320\262\321\203\320\265\321\202 \320\277\320\276\320\264\320\263\320\276\321\202\320\276\320\262\320"
                         "\272\320\270 \320\270 \321\200\320\265\320\260\320\273\320\270\320\267\320\260\321\206\320\270\320\270 \320\275\320\260\320\277\321\200\320\260\320\262\320\273\320\265\320\275\320\270\320\271 \320\277\321\200\320\276\320\263\321\200\320\265\321\201\321\201\320\270\320\262\320\275\320\276\320\263\320\276 \321\200\320\260\320\267\320\262\320\270\321\202\320\270\321\217.</p></body></html>", nullptr));
+        pushButton->setText(QApplication::translate("newsOne", "\320\224\320\276\320\261\320\260\320\262\320\270\321\202\321\214 \320\272\320\276\320\274\320\274\320\265\320\275\321\202\320\260\321\200\320\270\320\271", nullptr));
     } // retranslateUi
 
 };

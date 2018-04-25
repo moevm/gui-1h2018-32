@@ -6,6 +6,7 @@
 #include <QtCharts/QChartView>
 
 QString ThemeWidget::userIn = "";
+int ThemeWidget::newsId = 0;
 
 ThemeWidget::ThemeWidget(QWidget *parent) :
     QWidget(parent),
@@ -35,6 +36,17 @@ ThemeWidget::ThemeWidget(QWidget *parent) :
     if (!b) {
         qDebug() << "Cannot create table!";
     }
+    QSqlQuery b_query;
+    QString stri = "CREATE TABLE comments ("
+                "newsId VARCHAR(255) NOT NULL, "
+                "userId VARCHAR(255) NOT NULL, "
+                "date DATETIME NOT NULL, "
+                "comment VARCHAR(255) NOT NULL"
+                ");";
+    bool c = b_query.exec(stri);
+    if (!c) {
+        qDebug() << "Cannot create table!";
+    }
 
     m_ui->pushButton_3->setVisible(false);
     m_ui->label->setVisible(false);
@@ -49,45 +61,43 @@ ThemeWidget::ThemeWidget(QWidget *parent) :
     m_ui->gridLayout->addWidget(chartView, 1, 0);
     m_button1 = new QPushButton("Read more", this);
     m_ui->gridLayout->addWidget(m_button1, 2, 0);
-//    m_button1->setGeometry(QSize(200, 50));
-    connect(m_button1, SIGNAL (released()), this, SLOT (handleButton()));
+    connect(m_button1, SIGNAL (released()), this, SLOT(handleButton()));
     m_charts << chartView;
 
     chartView = new QChartView(createAreaChart());
     m_ui->gridLayout->addWidget(chartView, 1, 1);
-    m_button1 = new QPushButton("Read more", this);
-    m_ui->gridLayout->addWidget(m_button1, 2, 1);
-//    m_button1->setGeometry(QSize(200, 50));
-    connect(m_button1, SIGNAL (released()), this, SLOT (handleButton()));
+    m_button2 = new QPushButton("Read more", this);
+    m_ui->gridLayout->addWidget(m_button2, 2, 1);
+    connect(m_button2, SIGNAL (released()), this, SLOT (handleButton()));
     m_charts << chartView;
 
     chartView = new QChartView(createAreaChart());
     m_ui->gridLayout->addWidget(chartView, 1, 2);
-    m_button1 = new QPushButton("Read more", this);
-    m_ui->gridLayout->addWidget(m_button1, 2, 2);
-    connect(m_button1, SIGNAL (released()), this, SLOT (handleButton()));
+    m_button3 = new QPushButton("Read more", this);
+    m_ui->gridLayout->addWidget(m_button3, 2, 2);
+    connect(m_button3, SIGNAL (released()), this, SLOT (handleButton()));
     m_charts << chartView;
 
     chartView = new QChartView(createAreaChart());
     m_ui->gridLayout->addWidget(chartView, 3, 0);
     m_charts << chartView;
-    m_button1 = new QPushButton("Read more", this);
-    connect(m_button1, SIGNAL (released()), this, SLOT (handleButton()));
-    m_ui->gridLayout->addWidget(m_button1, 4, 0);
+    m_button4 = new QPushButton("Read more", this);
+    connect(m_button4, SIGNAL (released()), this, SLOT (handleButton()));
+    m_ui->gridLayout->addWidget(m_button4, 4, 0);
 
     chartView = new QChartView(createAreaChart());
     m_ui->gridLayout->addWidget(chartView, 3, 1);
-    m_button1 = new QPushButton("Read more", this);
-    m_ui->gridLayout->addWidget(m_button1, 4, 1);
-    connect(m_button1, SIGNAL (released()), this, SLOT (handleButton()));
+    m_button5 = new QPushButton("Read more", this);
+    m_ui->gridLayout->addWidget(m_button5, 4, 1);
+    connect(m_button5, SIGNAL (released()), this, SLOT (handleButton()));
     m_charts << chartView;
 
     chartView = new QChartView(createAreaChart());
     m_ui->gridLayout->addWidget(chartView, 3, 2);
     m_charts << chartView;
-    m_button1 = new QPushButton("Read more", this);
-    m_ui->gridLayout->addWidget(m_button1, 4, 2);
-    connect(m_button1, SIGNAL (released()), this, SLOT (handleButton()));
+    m_button6 = new QPushButton("Read more", this);
+    m_ui->gridLayout->addWidget(m_button6, 4, 2);
+    connect(m_button6, SIGNAL (released()), this, SLOT (handleButton()));
 
     QPalette pal = qApp->palette();
     pal.setColor(QPalette::Window, QRgb(0xf0f0f0));
@@ -99,6 +109,24 @@ ThemeWidget::ThemeWidget(QWidget *parent) :
 
 void ThemeWidget::handleButton()
 {
+    if (QObject::sender() == m_button1) {
+        newsId = 1;
+    }
+    if (QObject::sender() == m_button2) {
+        newsId = 2;
+    }
+    if (QObject::sender() == m_button3) {
+        newsId = 3;
+    }
+    if (QObject::sender() == m_button4) {
+        newsId = 4;
+    }
+    if (QObject::sender() == m_button5) {
+        newsId = 5;
+    }
+    if (QObject::sender() == m_button6) {
+        newsId = 6;
+    }
     newsOne *newsone = new newsOne;
     newsone->show();
 }

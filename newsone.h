@@ -2,6 +2,7 @@
 #define NEWSONE_H
 
 #include <QDialog>
+#include "mainPage.h"
 
 namespace Ui {
     class newsOne;
@@ -17,6 +18,10 @@ public:
 
 private:
     Ui::newsOne *ui;
+    void getComments();
+
+private slots:
+    void handleButton();
 };
 
 #endif // NEWSONE_H

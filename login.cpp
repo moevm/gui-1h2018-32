@@ -2,8 +2,8 @@
 #include "ui_login.h"
 #include "QDebug"
 #include "QtSql"
-#include <QMessageBox>
 #include "mainPage.h"
+#include <QMessageBox>
 
 login::login(QWidget *parent) :
     QDialog(parent),
