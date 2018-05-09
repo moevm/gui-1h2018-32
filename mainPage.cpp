@@ -4,9 +4,191 @@
 #include "login.h"
 #include "signUp.h"
 #include <QtCharts/QChartView>
+#include <QMessageBox>
 
 QString ThemeWidget::userIn = "";
 int ThemeWidget::newsId = 0;
+
+void ThemeWidget::parseXML(){
+    QFile* file = new QFile("lenta.xml");
+    if (!file->open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QMessageBox::critical(this,   "ThemeWidget::parseXML",
+                                      "Couldn't open lenta.xml",
+                                      QMessageBox::Ok);
+        return;
+    }
+    QXmlStreamReader xml(file);
+    QList<QMap<QString,QString> > items;
+    while (!xml.atEnd() && !xml.hasError())
+    {
+        QXmlStreamReader::TokenType token = xml.readNext();
+        if (token == QXmlStreamReader::StartDocument)
+            continue;
+        if (token == QXmlStreamReader::StartElement)
+        {
+            if(xml.name() == "items") {
+                           continue;
+                       }
+            if (xml.name() == "item")
+                items.append(ThemeWidget::parseItem(xml));
+        }
+    }
+    if(xml.hasError())
+    {
+        QMessageBox::critical(this,
+                              "ThemeWidget::parseXML",
+                              xml.errorString(),
+                              QMessageBox::Ok);
+    }
+    int y = 0, i = 0;
+
+    if (m_ui->animatedComboBox->currentIndex() == 0){
+        while (!items.isEmpty()){
+            QMap<QString,QString> item = items.takeFirst();
+            if (item["category"] == "Путешествия"){
+                QChartView *chartView;
+                chartView = new QChartView(createAreaChart(item));
+                m_ui->gridLayout->addWidget(chartView, i+1, y);
+                m_button1 = new QPushButton("Читать полностью", this);
+                m_ui->gridLayout->addWidget(m_button1, i+2, y);
+                QString id = item["newsId"];
+                myform = new newsOne(id);
+                QString desc = item["description"];
+
+                connect(this, SIGNAL(otpravka(QString, QString)), myform, SLOT(priem(QString, QString)));
+                emit otpravka(desc, id);
+                connect(m_button1, SIGNAL(clicked()), myform, SLOT(show()));
+                m_charts << chartView;
+                y = y+1;
+                if (y % 3 == 0){
+                    y = 0;
+                    i = i+2;
+                }
+            }
+        }
+    }
+
+    if (m_ui->animatedComboBox->currentIndex() == 1){
+        while (!items.isEmpty()){
+            QMap<QString,QString> item = items.takeFirst();
+            if (item["category"] == "Культура"){
+                QChartView *chartView;
+                chartView = new QChartView(createAreaChart(item));
+                m_ui->gridLayout->addWidget(chartView, i+1, y);
+                m_button1 = new QPushButton("Читать полностью", this);
+                m_ui->gridLayout->addWidget(m_button1, i+2, y);
+                QString id = item["newsId"];
+                myform = new newsOne(id);
+                QString desc = item["description"];
+                connect(this, SIGNAL(otpravka(QString, QString)), myform, SLOT(priem(QString, QString)));
+                emit otpravka(desc, id);
+                connect(m_button1, SIGNAL(clicked()), myform, SLOT(show()));
+                m_charts << chartView;
+                y = y+1;
+                if (y % 3 == 0){
+                    y = 0;
+                    i = i+2;
+                }
+            }
+        }
+    }
+
+    if (m_ui->animatedComboBox->currentIndex() == 2){
+        while (!items.isEmpty()){
+            QMap<QString,QString> item = items.takeFirst();
+            if (item["category"] == "Криптовалюта"){
+                QChartView *chartView;
+                chartView = new QChartView(createAreaChart(item));
+                m_ui->gridLayout->addWidget(chartView, i+1, y);
+                m_button1 = new QPushButton("Читать полностью", this);
+                m_ui->gridLayout->addWidget(m_button1, i+2, y);
+                QString id = item["newsId"];
+                myform = new newsOne(id);
+                QString desc = item["description"];
+                connect(this, SIGNAL(otpravka(QString, QString)), myform, SLOT(priem(QString, QString)));
+                emit otpravka(desc, id);
+                connect(m_button1, SIGNAL(clicked()), myform, SLOT(show()));
+                m_charts << chartView;
+                y = y+1;
+                if (y % 3 == 0){
+                    y = 0;
+                    i = i+2;
+                }
+            }
+        }
+    }
+
+    if (m_ui->animatedComboBox->currentIndex() == 3){
+        while (!items.isEmpty()){
+            QMap<QString,QString> item = items.takeFirst();
+            if (item["category"] == "Мир"){
+                QChartView *chartView;
+                chartView = new QChartView(createAreaChart(item));
+                m_ui->gridLayout->addWidget(chartView, i+1, y);
+                m_button1 = new QPushButton("Читать полностью", this);
+                m_ui->gridLayout->addWidget(m_button1, i+2, y);
+                QString id = item["newsId"];
+                myform = new newsOne(id);
+                QString desc = item["description"];
+
+                connect(this, SIGNAL(otpravka(QString, QString)), myform, SLOT(priem(QString, QString)));
+                emit otpravka(desc, id);
+                connect(m_button1, SIGNAL(clicked()), myform, SLOT(show()));
+                m_charts << chartView;
+                y = y+1;
+                if (y % 3 == 0){
+                    y = 0;
+                    i = i+2;
+                }
+            }
+        }
+    }
+    xml.clear();
+}
+
+QMap<QString, QString> ThemeWidget::parseItem(QXmlStreamReader& xml) {
+    QMap<QString, QString> itemNews;
+    if (xml.tokenType() != QXmlStreamReader::StartElement && xml.name() == "item")
+        return itemNews;
+
+    QXmlStreamAttributes attributes = xml.attributes();
+    if (attributes.hasAttribute("id"))
+        itemNews["id"] = attributes.value("id").toString();
+    xml.readNext();
+    while (!(xml.tokenType() == QXmlStreamReader::EndElement && xml.name() == "item"))
+    {
+        if (xml.tokenType() == QXmlStreamReader::StartElement)
+        {
+            if (xml.name() == "title")
+                addElementDataToMap(xml, itemNews);
+            if (xml.name() == "link")
+                addElementDataToMap(xml, itemNews);
+            if (xml.name() == "description")
+                addElementDataToMap(xml, itemNews);
+            if (xml.name() == "category"){
+                addElementDataToMap(xml, itemNews);
+                newsId += 1;
+                QString id = QString::number(newsId);
+                itemNews.insert("newsId", id);
+  }
+        }
+        xml.readNext();
+    }
+    return itemNews;
+}
+
+void ThemeWidget::addElementDataToMap(QXmlStreamReader& xml, QMap<QString, QString>& map) const
+{
+    if (xml.tokenType() != QXmlStreamReader::StartElement)
+        return;
+    QString elementName = xml.name().toString();
+    xml.readNext();
+    if(xml.tokenType() != QXmlStreamReader::Characters) {
+            return;
+        }
+    map.insert(elementName, xml.text().toString());
+}
 
 ThemeWidget::ThemeWidget(QWidget *parent) :
     QWidget(parent),
@@ -19,34 +201,6 @@ ThemeWidget::ThemeWidget(QWidget *parent) :
     populateThemeBox();
     populateAnimationBox();
 
-    db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("TelegramNews.sqlite");
-
-    if (!db.open()){
-        qDebug() << db.lastError().text();
-    } else {
-        qDebug() << "Success!";
-    }
-    QSqlQuery a_query;
-    QString str = "CREATE TABLE users ("
-                "login VARCHAR(255) PRIMARY KEY NOT NULL, "
-                "password VARCHAR(255) NOT NULL"
-                ");";
-    bool b = a_query.exec(str);
-    if (!b) {
-        qDebug() << "Cannot create table!";
-    }
-    QSqlQuery b_query;
-    QString stri = "CREATE TABLE comments ("
-                "newsId VARCHAR(255) NOT NULL, "
-                "userId VARCHAR(255) NOT NULL, "
-                "date DATETIME NOT NULL, "
-                "comment VARCHAR(255) NOT NULL"
-                ");";
-    bool c = b_query.exec(stri);
-    if (!c) {
-        qDebug() << "Cannot create table!";
-    }
 
     m_ui->pushButton_3->setVisible(false);
     m_ui->label->setVisible(false);
@@ -55,49 +209,6 @@ ThemeWidget::ThemeWidget(QWidget *parent) :
     connect(m_ui->pushButton_2, SIGNAL (released()), this, SLOT (handleButtonSignUp()));
     connect(m_ui->pushButton_3, SIGNAL (released()), this, SLOT (handleButtonExit()));
 
-    QChartView *chartView;
-
-    chartView = new QChartView(createAreaChart());
-    m_ui->gridLayout->addWidget(chartView, 1, 0);
-    m_button1 = new QPushButton("Read more", this);
-    m_ui->gridLayout->addWidget(m_button1, 2, 0);
-    connect(m_button1, SIGNAL (released()), this, SLOT(handleButton()));
-    m_charts << chartView;
-
-    chartView = new QChartView(createAreaChart());
-    m_ui->gridLayout->addWidget(chartView, 1, 1);
-    m_button2 = new QPushButton("Read more", this);
-    m_ui->gridLayout->addWidget(m_button2, 2, 1);
-    connect(m_button2, SIGNAL (released()), this, SLOT (handleButton()));
-    m_charts << chartView;
-
-    chartView = new QChartView(createAreaChart());
-    m_ui->gridLayout->addWidget(chartView, 1, 2);
-    m_button3 = new QPushButton("Read more", this);
-    m_ui->gridLayout->addWidget(m_button3, 2, 2);
-    connect(m_button3, SIGNAL (released()), this, SLOT (handleButton()));
-    m_charts << chartView;
-
-    chartView = new QChartView(createAreaChart());
-    m_ui->gridLayout->addWidget(chartView, 3, 0);
-    m_charts << chartView;
-    m_button4 = new QPushButton("Read more", this);
-    connect(m_button4, SIGNAL (released()), this, SLOT (handleButton()));
-    m_ui->gridLayout->addWidget(m_button4, 4, 0);
-
-    chartView = new QChartView(createAreaChart());
-    m_ui->gridLayout->addWidget(chartView, 3, 1);
-    m_button5 = new QPushButton("Read more", this);
-    m_ui->gridLayout->addWidget(m_button5, 4, 1);
-    connect(m_button5, SIGNAL (released()), this, SLOT (handleButton()));
-    m_charts << chartView;
-
-    chartView = new QChartView(createAreaChart());
-    m_ui->gridLayout->addWidget(chartView, 3, 2);
-    m_charts << chartView;
-    m_button6 = new QPushButton("Read more", this);
-    m_ui->gridLayout->addWidget(m_button6, 4, 2);
-    connect(m_button6, SIGNAL (released()), this, SLOT (handleButton()));
 
     QPalette pal = qApp->palette();
     pal.setColor(QPalette::Window, QRgb(0xf0f0f0));
@@ -107,28 +218,9 @@ ThemeWidget::ThemeWidget(QWidget *parent) :
     updateUI();
 }
 
-void ThemeWidget::handleButton()
+void ThemeWidget::handleButton(QMap<QString,QString> item)
 {
-    if (QObject::sender() == m_button1) {
-        newsId = 1;
-    }
-    if (QObject::sender() == m_button2) {
-        newsId = 2;
-    }
-    if (QObject::sender() == m_button3) {
-        newsId = 3;
-    }
-    if (QObject::sender() == m_button4) {
-        newsId = 4;
-    }
-    if (QObject::sender() == m_button5) {
-        newsId = 5;
-    }
-    if (QObject::sender() == m_button6) {
-        newsId = 6;
-    }
-    newsOne *newsone = new newsOne;
-    newsone->show();
+    emit sendData(item["description"]);
 }
 
 void ThemeWidget::handleButtonLogin()
@@ -179,18 +271,24 @@ void ThemeWidget::populateThemeBox()
     m_ui->themeComboBox->addItem("Классическая", QChart::ChartThemeQt);
 }
 
-void ThemeWidget::populateAnimationBox()
+void ThemeWidget::selectTheme(QString newTheme)
 {
-    m_ui->animatedComboBox->addItem("Кино", QChart::NoAnimation);
-    m_ui->animatedComboBox->addItem("Музыка", QChart::GridAxisAnimations);
-    m_ui->animatedComboBox->addItem("Бизнес", QChart::SeriesAnimations);
-    m_ui->animatedComboBox->addItem("Криптовалюта", QChart::AllAnimations);
+    themeNew = newTheme;
 }
 
-QChart *ThemeWidget::createAreaChart() const
+void ThemeWidget::populateAnimationBox()
+{
+    m_ui->animatedComboBox->addItem("Путешествия", QChart::NoAnimation);
+    m_ui->animatedComboBox->addItem("Культура", QChart::GridAxisAnimations);
+    m_ui->animatedComboBox->addItem("Криптовалюта", QChart::SeriesAnimations);
+    m_ui->animatedComboBox->addItem("Мир", QChart::AllAnimations);
+}
+
+QChart *ThemeWidget::createAreaChart(QMap<QString,QString> item) const
 {
     QChart *chart = new QChart();
-    chart->setTitle("BREAKING NEWS");
+    //QMap<QString,QString> item = items.takeFirst();
+    chart->setTitle(item["title"]);
 
     return chart;
 }
@@ -235,9 +333,13 @@ void ThemeWidget::updateUI()
         window()->setPalette(pal);
     }
 
+    parseXML();
+    newsId = 0;
+
     QChart::AnimationOptions options(
                 m_ui->animatedComboBox->itemData(m_ui->animatedComboBox->currentIndex()).toInt());
     if (!m_charts.isEmpty() && m_charts.at(0)->chart()->animationOptions() != options) {
+
         for (QChartView *chartView : charts)
             chartView->chart()->setAnimationOptions(options);
     }

@@ -1,10 +1,13 @@
 #ifndef MAINPAGE_H
 #define MAINPAGE_H
 
+#include <QtXml>
+#include <QXmlStreamReader>
 #include <QtWidgets/QWidget>
 #include <QtCharts/QChartGlobal>
 #include <QtSql>
 #include <QPushButton>
+#include "newsone.h"
 
 QT_BEGIN_NAMESPACE
 class QComboBox;
@@ -30,41 +33,48 @@ public:
     explicit ThemeWidget(QWidget *parent = 0);
     ~ThemeWidget();
     static QString userIn;
-    static int newsId;
     void change();
+    static int newsId;
 
 private Q_SLOTS:
     void updateUI();
+    void handleButton(QMap<QString,QString>);
 
 private:
     void populateThemeBox();
     void populateAnimationBox();
     void connectSignals();
+    QString themeNew;
 
-    QChart *createAreaChart() const;
+    QChart *createAreaChart(QMap<QString,QString> items) const;
+
+signals:
+    void sendData(QString str);
+    void otpravka(QString, QString);
 
 private:
     int m_listCount;
     int m_valueMax;
     int m_valueCount;
     QList<QChartView *> m_charts;
-
     Ui_ThemeWidgetForm *m_ui;
     QSqlDatabase db;
 
 private slots:
-    void handleButton();
+
     void handleButtonLogin();
     void handleButtonSignUp();
-    void handleButtonExit(); 
+    void handleButtonExit();
+
+    void parseXML();
+    void selectTheme(QString);
 
 private:
     QPushButton *m_button1;
-    QPushButton *m_button2;
-    QPushButton *m_button3;
-    QPushButton *m_button4;
-    QPushButton *m_button5;
-    QPushButton *m_button6;
+    newsOne *myform;
+    QMap<QString, QString> parseItem(QXmlStreamReader& xml);
+    void addElementDataToMap(QXmlStreamReader& xml,
+                                 QMap<QString, QString>& map) const;
 };
 
 #endif
