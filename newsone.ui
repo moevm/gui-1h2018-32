@@ -6,50 +6,18 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>413</width>
-    <height>446</height>
+    <width>743</width>
+    <height>432</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QDialogButtonBox" name="buttonBox">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>410</y>
-     <width>341</width>
-     <height>32</height>
-    </rect>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Horizontal</enum>
-   </property>
-   <property name="standardButtons">
-    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-   </property>
-  </widget>
-  <widget class="QDialogButtonBox" name="buttonBox_2">
-   <property name="geometry">
-    <rect>
-     <x>350</x>
-     <y>250</y>
-     <width>341</width>
-     <height>32</height>
-    </rect>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Horizontal</enum>
-   </property>
-   <property name="standardButtons">
-    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-   </property>
-  </widget>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>350</y>
+     <y>210</y>
      <width>71</width>
      <height>16</height>
     </rect>
@@ -62,7 +30,7 @@
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>370</y>
+     <y>230</y>
      <width>331</width>
      <height>31</height>
     </rect>
@@ -84,22 +52,22 @@
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>40</x>
      <y>40</y>
-     <width>381</width>
+     <width>331</width>
      <height>161</height>
     </rect>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Значимость этих проблем настолько очевидна, что новая модель&lt;/p&gt;&lt;p&gt; организационной деятельности влечет за собой процесс внедрения и модернизации дальнейших направлений развития. Идейные соображения&lt;p&gt; высшего порядка, а также реализация намеченных плановых заданий позволяет оценить значение форм развития. Задача организации, в особенности же сложившаяся структура организации в значительной степени обуславливает &lt;p&gt;создание дальнейших направлений развития. Не следует, однако забывать, что постоянное информационно-пропагандистское &lt;p&gt;обеспечение нашей деятельности играет важную роль в формировании соответствующий условий активизации. &lt;p&gt;Задача организации, в особенности же консультация с широким активом способствует подготовки и реализации направлений прогрессивного развития.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string/>
    </property>
   </widget>
-  <widget class="QTextBrowser" name="textBrowser">
+  <widget class="QTextEdit" name="textEdit">
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>200</y>
-     <width>351</width>
+     <y>60</y>
+     <width>671</width>
      <height>141</height>
     </rect>
    </property>
@@ -107,50 +75,27 @@
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>44</x>
-     <y>410</y>
-     <width>131</width>
-     <height>23</height>
+     <x>390</x>
+     <y>232</y>
+     <width>141</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
     <string>Добавить комментарий</string>
    </property>
   </widget>
+  <widget class="QTextBrowser" name="textBrowser">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>270</y>
+     <width>671</width>
+     <height>131</height>
+    </rect>
+   </property>
+  </widget>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>newsOne</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>157</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>rejected()</signal>
-   <receiver>newsOne</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>286</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

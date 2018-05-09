@@ -5,33 +5,38 @@
 #include "mainPage.h"
 #include <QDateTime>
 
-newsOne::newsOne(QWidget *parent) :
+newsOne::newsOne(QString id, QWidget *parent) :
     QDialog(parent),
+    idForNew(id),
     ui(new Ui::newsOne)
+
 {
     ui->setupUi(this);
-    ui->textBrowser->setVisible(false);
+
     if (ThemeWidget::userIn == "") {
+        ui->textBrowser->setVisible(false);
         ui->lineEdit->setEnabled(false);
         ui->pushButton->setEnabled(false);
     }
     else {
-       ui->lineEdit->setEnabled(true);
-       ui->pushButton->setEnabled(true);
+        ui->textBrowser->setVisible(true);
+        ui->lineEdit->setEnabled(true);
+        ui->pushButton->setEnabled(true);
     }
     connect(ui->pushButton, SIGNAL (released()), this, SLOT (handleButton()));
     getComments();
 }
 
-newsOne::~newsOne()
+void newsOne::priem(QString str, QString newsId)
 {
-    delete ui;
+    ui->textEdit->setText(str);
+    this->idNews = newsId;
 }
 
 void newsOne::handleButton()
 {
     QString comment = ui->lineEdit->text();
-    QString s = QString::number(ThemeWidget::newsId);
+    QString s = this->idForNew;
     QSqlQuery a_query;
     QString str_insert = "INSERT INTO comments(newsId, userId, date, comment) "
                 "VALUES ('%1', '%2', '%3', '%4');";
@@ -51,7 +56,7 @@ void newsOne::handleButton()
 
 void newsOne::getComments()
 {
-    QString str1 = QString::number(ThemeWidget::newsId);
+    QString str1 = this->idForNew;
     QSqlQuery query1("SELECT userId, date, comment FROM comments WHERE newsId='" + str1 + "';");
     QString comment = "";
     while (query1.next()) {
@@ -61,6 +66,10 @@ void newsOne::getComments()
     }
     if (comment != "") {
         ui->textBrowser->setText(comment);
-        ui->textBrowser->setVisible(true);
     }
+}
+
+newsOne::~newsOne()
+{
+    delete ui;
 }
